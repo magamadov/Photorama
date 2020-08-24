@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D829650824F32C52003436B9 /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829650724F32C52003436B9 /* PhotoStore.swift */; };
 		D8AF9C2824F20DA300F0FEA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF9C2724F20DA300F0FEA6 /* AppDelegate.swift */; };
 		D8AF9C2A24F20DA300F0FEA6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF9C2924F20DA300F0FEA6 /* SceneDelegate.swift */; };
 		D8AF9C2C24F20DA300F0FEA6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF9C2B24F20DA300F0FEA6 /* PhotosViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D829650724F32C52003436B9 /* PhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStore.swift; sourceTree = "<group>"; };
 		D8AF9C2424F20DA300F0FEA6 /* Photorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8AF9C2724F20DA300F0FEA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8AF9C2924F20DA300F0FEA6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				D8AF9C2B24F20DA300F0FEA6 /* PhotosViewController.swift */,
 				D8AF9C2D24F20DA300F0FEA6 /* Main.storyboard */,
 				D8AF9C3B24F21A9400F0FEA6 /* FlickrAPI.swift */,
+				D829650724F32C52003436B9 /* PhotoStore.swift */,
 				D8AF9C3024F20DA400F0FEA6 /* Assets.xcassets */,
 				D8AF9C3224F20DA400F0FEA6 /* LaunchScreen.storyboard */,
 				D8AF9C3524F20DA400F0FEA6 /* Info.plist */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D829650824F32C52003436B9 /* PhotoStore.swift in Sources */,
 				D8AF9C2C24F20DA300F0FEA6 /* PhotosViewController.swift in Sources */,
 				D8AF9C2824F20DA300F0FEA6 /* AppDelegate.swift in Sources */,
 				D8AF9C2A24F20DA300F0FEA6 /* SceneDelegate.swift in Sources */,
