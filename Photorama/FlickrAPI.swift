@@ -5,17 +5,6 @@
 //  Created by ZELIMKHAN MAGAMADOV on 23.08.2020.
 //
 
-
-/*
- 
- Key:
- 6e73aae468176526744ebdba3e5943ee
- 
- Secret:
- a0676e89bab6db61
- 
- */
-
 import Foundation
 
 enum EndPoint: String {
@@ -55,5 +44,37 @@ struct FlickrAPI {
     
     components.queryItems = queryItems
     return components.url!
+  }
+  
+  static func photos(fromJSON data: Data) -> Result<[Photo], Error> {
+    let decoder = JSONDecoder()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    dateFormatter.locale = Locale(identifier: "ru_RU")
+    dateFormatter.timeZone = TimeZone.current
+    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+    do {
+      let flickrResponse = try decoder.decode(FlickrResponse.self, from: data)
+      let photos = flickrResponse.photosInfo.photos.filter { $0.remoteURL != nil }
+      return .success(photos)
+    } catch {
+      return .failure(error)
+    }
+  }
+}
+
+struct FlickrResponse: Codable {
+  let photosInfo: FlickrPhotosResponse
+  
+  enum CodingKeys: String, CodingKey {
+    case photosInfo = "photos"
+  }
+}
+
+struct FlickrPhotosResponse: Codable {
+  let photos: [Photo]
+  
+  enum CodingKeys: String, CodingKey {
+    case photos = "photo"
   }
 }
