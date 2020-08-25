@@ -8,7 +8,7 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
-
+  
   @IBOutlet private var imageView: UIImageView!
   var store: PhotoStore!
   
@@ -20,8 +20,8 @@ class PhotosViewController: UIViewController {
         case .success(let photos):
           print("Successfully found: \(photos.count) photos")
           //if let firstPhoto = photos[Int.random(in: 0..<photos.count)] {
-            self.updateImageView(for: photos[Int.random(in: 0..<photos.count)])
-          //}
+          self.updateImageView(for: photos[Int.random(in: 0..<photos.count)])
+        //}
         case .failure(let error):
           print("Error fetching interesting photos: \(error)")
       }
@@ -32,9 +32,8 @@ class PhotosViewController: UIViewController {
     store.fetchImage(for: photo) { (imageResult) in
       switch imageResult {
         case .success(let image):
-          DispatchQueue.main.async {
-            self.imageView.image = image
-          }
+          self.imageView.image = image
+          
           
         case .failure(let error):
           print("Error downloading image: \(error)")
