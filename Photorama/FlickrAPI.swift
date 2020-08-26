@@ -9,6 +9,7 @@ import Foundation
 
 enum EndPoint: String {
   case interestingPhotos = "flickr.interestingness.getList"
+  case recentPhotos = "flickr.photos.getRecent"
 }
 
 struct FlickrAPI {
@@ -17,6 +18,10 @@ struct FlickrAPI {
   
   static var interestingPhotosURL: URL {
     return flickrURL(endPoint: .interestingPhotos, parametrs: ["extras": "url_z,date_taken"])
+  }
+  
+  static var recentPhotosURL: URL {
+    return flickrURL(endPoint: .recentPhotos, parametrs: ["extras": "url_z,date_taken"])
   }
   
   private static func flickrURL(endPoint: EndPoint, parametrs: [String:String]?) -> URL {

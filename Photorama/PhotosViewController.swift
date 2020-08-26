@@ -15,17 +15,7 @@ class PhotosViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    store.fetchInterestingPhoto { (photosResult) in
-      switch photosResult {
-        case .success(let photos):
-          print("Successfully found: \(photos.count) photos")
-          //if let firstPhoto = photos[Int.random(in: 0..<photos.count)] {
-          self.updateImageView(for: photos[Int.random(in: 0..<photos.count)])
-        //}
-        case .failure(let error):
-          print("Error fetching interesting photos: \(error)")
-      }
-    }
+    refreshButton()
   }
   
   func updateImageView(for photo: Photo) {
@@ -41,4 +31,17 @@ class PhotosViewController: UIViewController {
     }
   }
   
+  @IBAction func refreshButton() {
+    store.fetchPhotos(category: .recentPhotos) { (photosResult) in
+      switch photosResult {
+        case .success(let photos):
+          print("Successfully found: \(photos.count) photos")
+          //if let firstPhoto = photos[Int.random(in: 0..<photos.count)] {
+          self.updateImageView(for: photos[Int.random(in: 0..<photos.count)])
+        //}
+        case .failure(let error):
+          print("Error fetching interesting photos: \(error)")
+      }
+    }
+  }
 }

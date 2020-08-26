@@ -19,11 +19,31 @@ class PhotoStore {
     return URLSession(configuration: config)
   }()
   
-  func fetchInterestingPhoto(completion: @escaping (Result<[Photo], Error>) -> Void) {
-    let url = FlickrAPI.interestingPhotosURL
+  func fetchPhotos(category: EndPoint, completion: @escaping (Result<[Photo], Error>) -> Void) {
+    let url: URL!
+    
+    switch category {
+      case .interestingPhotos:
+        url = FlickrAPI.interestingPhotosURL
+      case .recentPhotos:
+        url = FlickrAPI.recentPhotosURL
+    }
+    
     let request = URLRequest(url: url)
+        
     let task = session.dataTask(with: request) { (data, response, error) in
       let result = self.processPhotoRequest(data: data, error: error)
+    
+      // Bronze Challenge: Printing the Response Information
+      
+      if let httpResponse = response as? HTTPURLResponse {
+        let statusCode = httpResponse.statusCode
+        print("Status code: \(statusCode)")
+        for (key, value) in httpResponse.allHeaderFields {
+          print("\(key): \(value)")
+        }
+      }
+      
       OperationQueue.main.addOperation {
         completion(result)
       }

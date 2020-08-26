@@ -16,17 +16,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ao-zo-kfM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ao-zo-kfM">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="762"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pQ-jR-JEy">
+                                <rect key="frame" x="40" y="770" width="334" height="60"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="CHV-03-EK2"/>
+                                </constraints>
+                                <state key="normal" title="Refresh"/>
+                                <connections>
+                                    <action selector="refreshButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vmf-HB-QEx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7pQ-jR-JEy" firstAttribute="top" secondItem="7ao-zo-kfM" secondAttribute="bottom" constant="8" id="ECP-sP-rcs"/>
                             <constraint firstAttribute="trailing" secondItem="7ao-zo-kfM" secondAttribute="trailing" id="OAC-IX-Fak"/>
                             <constraint firstItem="7ao-zo-kfM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ajq-Ei-wa7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7pQ-jR-JEy" secondAttribute="trailing" constant="40" id="eID-ui-OXz"/>
+                            <constraint firstItem="7pQ-jR-JEy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="jWX-QO-wKm"/>
                             <constraint firstItem="7ao-zo-kfM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="k3U-Ri-SnP"/>
-                            <constraint firstAttribute="bottom" secondItem="7ao-zo-kfM" secondAttribute="bottom" id="rXS-mY-vHI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7ao-zo-kfM" secondAttribute="bottom" constant="100" id="lvb-4W-PJp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photorama" id="Z0C-Tn-Snw"/>
@@ -60,6 +74,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
