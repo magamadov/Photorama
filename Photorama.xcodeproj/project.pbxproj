@@ -16,6 +16,7 @@
 		D8AF9C3124F20DA400F0FEA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8AF9C3024F20DA400F0FEA6 /* Assets.xcassets */; };
 		D8AF9C3424F20DA400F0FEA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8AF9C3224F20DA400F0FEA6 /* LaunchScreen.storyboard */; };
 		D8AF9C3C24F21A9400F0FEA6 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF9C3B24F21A9400F0FEA6 /* FlickrAPI.swift */; };
+		D8C67AF524F9ECEA007A0EAA /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C67AF424F9ECEA007A0EAA /* PhotoDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		D8AF9C3324F20DA400F0FEA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8AF9C3524F20DA400F0FEA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8AF9C3B24F21A9400F0FEA6 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
+		D8C67AF424F9ECEA007A0EAA /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				D8AF9C2D24F20DA300F0FEA6 /* Main.storyboard */,
 				D8AF9C3B24F21A9400F0FEA6 /* FlickrAPI.swift */,
 				D829650724F32C52003436B9 /* PhotoStore.swift */,
+				D8C67AF424F9ECEA007A0EAA /* PhotoDataSource.swift */,
 				D8AF9C3024F20DA400F0FEA6 /* Assets.xcassets */,
 				D8AF9C3224F20DA400F0FEA6 /* LaunchScreen.storyboard */,
 				D8AF9C3524F20DA400F0FEA6 /* Info.plist */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D829650A24F38D5B003436B9 /* Photo.swift in Sources */,
+				D8C67AF524F9ECEA007A0EAA /* PhotoDataSource.swift in Sources */,
 				D829650824F32C52003436B9 /* PhotoStore.swift in Sources */,
 				D8AF9C2C24F20DA300F0FEA6 /* PhotosViewController.swift in Sources */,
 				D8AF9C2824F20DA300F0FEA6 /* AppDelegate.swift in Sources */,
@@ -228,7 +232,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -283,7 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -9,35 +9,25 @@ import UIKit
 
 class PhotosViewController: UIViewController {
   
-  @IBOutlet private var imageView: UIImageView!
+  @IBOutlet var collectionView: UICollectionView!
   var store: PhotoStore!
+  let photoDataSource = PhotoDataSource()
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    collectionView.dataSource = photoDataSource
     
     store.fetchInterestingPhoto { (photosResult) in
       switch photosResult {
         case .success(let photos):
           print("Successfully found: \(photos.count) photos")
-          //if let firstPhoto = photos[Int.random(in: 0..<photos.count)] {
-          self.updateImageView(for: photos[Int.random(in: 0..<photos.count)])
-        //}
+          self.photoDataSource.photos = photos
         case .failure(let error):
           print("Error fetching interesting photos: \(error)")
+          self.photoDataSource.photos.removeAll()
       }
-    }
-  }
-  
-  func updateImageView(for photo: Photo) {
-    store.fetchImage(for: photo) { (imageResult) in
-      switch imageResult {
-        case .success(let image):
-          self.imageView.image = image
-          
-          
-        case .failure(let error):
-          print("Error downloading image: \(error)")
-      }
+      self.collectionView.reloadSections(IndexSet(integer: 0))
     }
   }
   
