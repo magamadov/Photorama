@@ -22,14 +22,35 @@
                             <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="neF-gm-9DH">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="neF-gm-9DH" customClass="PhotoCollectionViewCell" customModule="Photorama" customModuleProvider="target">
                                 <rect key="frame" x="2" y="2" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="y8J-JC-AV7">
                                     <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X91-91-YlX">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jiX-Dv-0S7">
+                                            <rect key="frame" x="35" y="35" width="20" height="20"/>
+                                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="X91-91-YlX" secondAttribute="bottom" id="66f-M5-bSU"/>
+                                        <constraint firstItem="jiX-Dv-0S7" firstAttribute="centerX" secondItem="y8J-JC-AV7" secondAttribute="centerX" id="FaV-vZ-1eL"/>
+                                        <constraint firstItem="X91-91-YlX" firstAttribute="top" secondItem="y8J-JC-AV7" secondAttribute="top" id="Tfi-gb-euF"/>
+                                        <constraint firstAttribute="trailing" secondItem="X91-91-YlX" secondAttribute="trailing" id="n1j-jK-0o4"/>
+                                        <constraint firstItem="X91-91-YlX" firstAttribute="leading" secondItem="y8J-JC-AV7" secondAttribute="leading" id="ovv-Cg-gQK"/>
+                                        <constraint firstItem="jiX-Dv-0S7" firstAttribute="centerY" secondItem="y8J-JC-AV7" secondAttribute="centerY" id="ymw-in-HFe"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="imageView" destination="X91-91-YlX" id="LEC-zR-d3n"/>
+                                    <outlet property="spinner" destination="jiX-Dv-0S7" id="EMP-o8-gKe"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                     </collectionView>
