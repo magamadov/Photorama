@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotosViewController: UIViewController {
+class PhotosViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   
   @IBOutlet var collectionView: UICollectionView!
   var store: PhotoStore!
@@ -17,6 +17,7 @@ class PhotosViewController: UIViewController {
     super.viewDidLoad()
     
     collectionView.dataSource = photoDataSource
+    collectionView.delegate = self
     
     store.fetchInterestingPhoto { (photosResult) in
       switch photosResult {
@@ -29,6 +30,31 @@ class PhotosViewController: UIViewController {
       }
       self.collectionView.reloadSections(IndexSet(integer: 0))
     }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    
+    // Get
+    
+    let photo = photoDataSource.photos[indexPath.row]
+    
+    store.fetchImage(for: photo) { (result) in
+      guard let photoIndex = self.photoDataSource.photos.firstIndex(of: photo),
+            case let .success(image) = result else { return }
+      
+      let photoIndexPath = IndexPath(item: photoIndex, section: 0)
+      
+      if let cell = self.collectionView.cellForItem(at: photoIndexPath) as? PhotoCollectionViewCell {
+        cell.update(displaying: image)
+      }
+    }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+    let width = (view.bounds.width / 3) - 1
+    return CGSize(width: width, height: width)
+    
   }
   
 }

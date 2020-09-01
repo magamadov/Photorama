@@ -10,6 +10,7 @@ import Foundation
 // Codable (Decoder protocol) generates the default init
 
 class Photo: Codable {
+  
   let title: String
   let remoteURL: URL?
   let photoID: String
@@ -21,5 +22,12 @@ class Photo: Codable {
     case photoID = "id"
     case dateTaken = "datetaken"
   }
+}
+
+extension Photo: Equatable {
+  static func == (lhs: Photo, rhs: Photo) -> Bool {
+    return lhs.photoID == rhs.photoID
+  }
+  
 }
 
