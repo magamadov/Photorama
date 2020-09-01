@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotosViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class PhotosViewController: UIViewController, UICollectionViewDelegate {
   
   @IBOutlet var collectionView: UICollectionView!
   var store: PhotoStore!
@@ -50,11 +50,32 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
     
-    let width = (view.bounds.width / 3) - 1
-    return CGSize(width: width, height: width)
-    
+    let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+    let width = (view.bounds.width / 4) - 3
+    layout.itemSize = CGSize(width: width, height: width)
   }
   
+//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//    let height = (view.bounds.width / 2) - 1
+//    //let width = (view.bounds.width / 2) - 1
+//    return CGSize(width: height, height: height)
+//  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    switch segue.identifier {
+      case "showPhoto":
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+          let photo = photoDataSource.photos[selectedIndexPath.row]
+          let destinationVC = segue.destination as! PhotoInfoViewController
+          destinationVC.photo = photo
+          destinationVC.store = store
+        }
+      default:
+        preconditionFailure("Unexpected segue identifier!")
+    }
+  }
 }
