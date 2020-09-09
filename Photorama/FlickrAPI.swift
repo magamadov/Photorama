@@ -46,7 +46,7 @@ struct FlickrAPI {
     return components.url!
   }
   
-  static func photos(fromJSON data: Data) -> Result<[Photo], Error> {
+  static func photos(fromJSON data: Data) -> Result<[FlickrPhoto], Error> {
     let decoder = JSONDecoder()
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -72,7 +72,7 @@ struct FlickrResponse: Codable {
 }
 
 struct FlickrPhotosResponse: Codable {
-  let photos: [Photo]
+  let photos: [FlickrPhoto]
   
   enum CodingKeys: String, CodingKey {
     case photos = "photo"
