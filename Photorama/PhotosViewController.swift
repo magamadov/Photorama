@@ -19,16 +19,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     collectionView.dataSource = photoDataSource
     collectionView.delegate = self
     
+    updateDataSource()
+    
     store.fetchInterestingPhoto { (photosResult) in
-      switch photosResult {
-        case .success(let photos):
-          print("Successfully found: \(photos.count) photos")
-          self.photoDataSource.photos = photos
-        case .failure(let error):
-          print("Error fetching interesting photos: \(error)")
-          self.photoDataSource.photos.removeAll()
-      }
-      self.collectionView.reloadSections(IndexSet(integer: 0))
+      self.updateDataSource()
     }
   }
   
@@ -58,13 +52,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     layout.itemSize = CGSize(width: width, height: width)
   }
   
-//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//    let height = (view.bounds.width / 2) - 1
-//    //let width = (view.bounds.width / 2) - 1
-//    return CGSize(width: height, height: height)
-//  }
-  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     switch segue.identifier {
       case "showPhoto":
@@ -78,4 +65,17 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         preconditionFailure("Unexpected segue identifier!")
     }
   }
+  
+  private func updateDataSource() {
+    store.fetchAllPhotos { (photosResult) in
+      switch photosResult {
+        case let .success(photos):
+          self.photoDataSource.photos = photos
+        case .failure:
+          self.photoDataSource.photos.removeAll()
+      }
+      self.collectionView.reloadSections(IndexSet(integer: 0))
+    }
+  }
+  
 }
