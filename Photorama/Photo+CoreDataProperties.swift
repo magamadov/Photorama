@@ -2,7 +2,7 @@
 //  Photo+CoreDataProperties.swift
 //  Photorama
 //
-//  Created by ZELIMKHAN MAGAMADOV on 08.09.2020.
+//  Created by ZELIMKHAN MAGAMADOV on 11.09.2020.
 //
 //
 
@@ -16,9 +16,10 @@ extension Photo {
     return NSFetchRequest<Photo>(entityName: "Photo")
   }
   
-  @NSManaged public var photoID: String?
-  @NSManaged public var title: String?
   @NSManaged public var dateTaken: Date?
+  @NSManaged public var photoID: String?
   @NSManaged public var remoteURL: URL?
+  @NSManaged public var title: String?
+  @NSManaged public var viewsCounter: Int64
   
 }

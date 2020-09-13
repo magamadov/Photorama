@@ -15,7 +15,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     collectionView.dataSource = photoDataSource
     collectionView.delegate = self
     
@@ -39,7 +38,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
       let photoIndexPath = IndexPath(item: photoIndex, section: 0)
       
       if let cell = self.collectionView.cellForItem(at: photoIndexPath) as? PhotoCollectionViewCell {
-        cell.update(displaying: image)
+        cell.update(displaying: image, viewCounter: Int(photo.viewsCounter))
       }
     }
   }
@@ -48,7 +47,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     super.viewDidLayoutSubviews()
     
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-    let width = (view.bounds.width / 4) - 3
+    let width = (view.bounds.width / 3) - 1
     layout.itemSize = CGSize(width: width, height: width)
   }
   
@@ -60,13 +59,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
           let destinationVC = segue.destination as! PhotoInfoViewController
           destinationVC.photo = photo
           destinationVC.store = store
+          destinationVC.photosViewController = self
         }
       default:
         preconditionFailure("Unexpected segue identifier!")
     }
   }
   
-  private func updateDataSource() {
+  func updateDataSource() {
     store.fetchAllPhotos { (photosResult) in
       switch photosResult {
         case let .success(photos):

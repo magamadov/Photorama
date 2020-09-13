@@ -18,7 +18,7 @@ class PhotoStore {
   let imageStore = ImageStore()
   
   let persistentContainer: NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "Photorama")    
+    let container = NSPersistentContainer(name: "Photorama")
     container.loadPersistentStores { (description, error) in
       if let error = error {
         print("Error setting up Core Data: \(error)")
@@ -83,12 +83,12 @@ class PhotoStore {
   
   private func proccessImageRequest(data: Data?, error: Error?) -> Result<UIImage, Error> {
     guard let imageData = data,
-          let image = UIImage(data: imageData) else {
-      if data == nil {
-        return .failure(error!)
-      } else {
-        return .failure(PhotoError.imageCreationError)
-      }
+      let image = UIImage(data: imageData) else {
+        if data == nil {
+          return .failure(error!)
+        } else {
+          return .failure(PhotoError.imageCreationError)
+        }
     }
     return .success(image)
   }
@@ -121,9 +121,10 @@ class PhotoStore {
             photo.photoID = flickrPhoto.photoID
             photo.remoteURL = flickrPhoto.remoteURL
             photo.dateTaken = flickrPhoto.dateTaken
+            //photo.viewsCounter = Int64(flickrPhoto.viewsCounter)
           }
           return photo
-      }
+        }
         return .success(photos)
       case let .failure(error):
         return .failure(error)

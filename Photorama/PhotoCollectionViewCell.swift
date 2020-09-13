@@ -10,11 +10,13 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var spinner: UIActivityIndicatorView!
+  @IBOutlet var viewCounterLabel: UILabel!
   
-  func update(displaying image: UIImage?) {
+  func update(displaying image: UIImage?, viewCounter: Int) {
     if let imageToDisplay = image {
       spinner.stopAnimating()
       imageView.image = imageToDisplay
+      viewCounterLabel.text = String(viewCounter)
     } else {
       spinner.startAnimating()
       imageView.image = nil
