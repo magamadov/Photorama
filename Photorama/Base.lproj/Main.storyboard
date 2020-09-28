@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Photorama-->
+        <!--Photos View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="PhotosViewController" customModule="Photorama" customModuleProvider="target" sceneMemberID="viewController">
@@ -45,23 +45,34 @@
                                             <color key="textColor" systemColor="systemPinkColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TEq-uB-xvE">
+                                            <rect key="frame" x="90" y="90" width="25" height="25"/>
+                                            <color key="tintColor" systemColor="systemYellowColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="1gT-1M-UcR"/>
+                                                <constraint firstAttribute="height" constant="25" id="8wN-Ut-uZz"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="X91-91-YlX" secondAttribute="bottom" id="66f-M5-bSU"/>
                                         <constraint firstAttribute="bottom" secondItem="zii-8I-2LG" secondAttribute="bottom" constant="3" id="DPj-Xn-68a"/>
                                         <constraint firstItem="jiX-Dv-0S7" firstAttribute="centerX" secondItem="y8J-JC-AV7" secondAttribute="centerX" id="FaV-vZ-1eL"/>
+                                        <constraint firstAttribute="trailing" secondItem="TEq-uB-xvE" secondAttribute="trailing" constant="5" id="FvG-dk-m0L"/>
                                         <constraint firstAttribute="trailing" secondItem="zii-8I-2LG" secondAttribute="trailing" constant="3" id="RXG-4E-dR3"/>
                                         <constraint firstItem="zii-8I-2LG" firstAttribute="leading" secondItem="y8J-JC-AV7" secondAttribute="leading" constant="3" id="SbM-Ls-Bw5"/>
                                         <constraint firstItem="X91-91-YlX" firstAttribute="top" secondItem="y8J-JC-AV7" secondAttribute="top" id="Tfi-gb-euF"/>
                                         <constraint firstItem="zii-8I-2LG" firstAttribute="top" secondItem="y8J-JC-AV7" secondAttribute="top" constant="3" id="YIM-UH-QXJ"/>
                                         <constraint firstAttribute="trailing" secondItem="X91-91-YlX" secondAttribute="trailing" id="n1j-jK-0o4"/>
                                         <constraint firstItem="X91-91-YlX" firstAttribute="leading" secondItem="y8J-JC-AV7" secondAttribute="leading" id="ovv-Cg-gQK"/>
+                                        <constraint firstAttribute="bottom" secondItem="TEq-uB-xvE" secondAttribute="bottom" constant="5" id="waL-0w-PMq"/>
                                         <constraint firstItem="jiX-Dv-0S7" firstAttribute="centerY" secondItem="y8J-JC-AV7" secondAttribute="centerY" id="ymw-in-HFe"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="imageView" destination="X91-91-YlX" id="LEC-zR-d3n"/>
+                                    <outlet property="isFavorite" destination="TEq-uB-xvE" id="9J5-Wc-da1"/>
                                     <outlet property="spinner" destination="jiX-Dv-0S7" id="EMP-o8-gKe"/>
                                     <outlet property="viewCounterLabel" destination="zii-8I-2LG" id="zUF-m7-ruD"/>
                                     <segue destination="Yjy-FY-NLD" kind="show" identifier="showPhoto" id="6EV-dM-WtK"/>
@@ -69,14 +80,27 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Photorama" id="Z0C-Tn-Snw"/>
+                    <navigationItem key="navigationItem" id="Z0C-Tn-Snw">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="KP9-8a-n6N">
+                            <rect key="frame" x="138.5" y="5.5" width="137" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Main"/>
+                                <segment title="Favorite"/>
+                            </segments>
+                            <connections>
+                                <action selector="viewDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="tf6-Xo-iNl"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="yCn-Bt-BXY" id="gRa-Bx-3JL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="133"/>
+            <point key="canvasLocation" x="947.82608695652186" y="132.58928571428572"/>
         </scene>
         <!--Photo Info View Controller-->
         <scene sceneID="cbi-V0-tVZ">
@@ -128,8 +152,15 @@
                             <constraint firstItem="FeS-mJ-uHZ" firstAttribute="leading" secondItem="EAB-iI-1gR" secondAttribute="leading" id="sjD-ez-LT8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Mbf-CO-m36"/>
+                    <navigationItem key="navigationItem" id="Mbf-CO-m36">
+                        <barButtonItem key="rightBarButtonItem" image="star" catalog="system" id="Coj-Ck-Adf">
+                            <connections>
+                                <action selector="addToFavorite:" destination="Yjy-FY-NLD" id="Zo0-4X-1UC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="Coj-Ck-Adf" id="CVB-HO-J8S"/>
                         <outlet property="imageView" destination="EAB-iI-1gR" id="aPW-g5-XOC"/>
                         <outlet property="viewsCounter" destination="kGy-mT-3V1" id="sCU-qi-FhO"/>
                         <outlet property="viewsImageView" destination="uSf-SP-9I9" id="Amw-pq-gqd"/>
@@ -224,11 +255,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

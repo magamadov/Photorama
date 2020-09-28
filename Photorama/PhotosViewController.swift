@@ -23,22 +23,25 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     store.fetchInterestingPhoto { (photosResult) in
       self.updateDataSource()
     }
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(updateDataSource), name: NSNotification.Name("reload"), object: nil)
+    
   }
   
   func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     
-    // Get
-    
     let photo = photoDataSource.photos[indexPath.row]
+    let favorite = photo.favorite
     
     store.fetchImage(for: photo) { (result) in
+      
       guard let photoIndex = self.photoDataSource.photos.firstIndex(of: photo),
             case let .success(image) = result else { return }
       
       let photoIndexPath = IndexPath(item: photoIndex, section: 0)
       
       if let cell = self.collectionView.cellForItem(at: photoIndexPath) as? PhotoCollectionViewCell {
-        cell.update(displaying: image, viewCounter: Int(photo.viewsCounter))
+        cell.update(displaying: image, viewCounter: Int(photo.viewsCounter), favorite: favorite)
       }
     }
   }
@@ -66,11 +69,19 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     }
   }
   
-  func updateDataSource() {
+  @objc func updateDataSource() {
     store.fetchAllPhotos { (photosResult) in
       switch photosResult {
         case let .success(photos):
+          
+          var photos = photos
+          
+          if self.photoDataSource.type == .favs {
+            photos = photos.filter { $0.favorite }
+          }
+          
           self.photoDataSource.photos = photos
+          
         case .failure:
           self.photoDataSource.photos.removeAll()
       }
@@ -78,4 +89,18 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     }
   }
   
+  
+  @IBAction func viewDidChange(_ sender: UISegmentedControl) {
+    
+    switch sender.selectedSegmentIndex {
+    case 0:
+      photoDataSource.type = .all
+      updateDataSource()
+    case 1:
+      photoDataSource.type = .favs
+      updateDataSource()
+    default:
+      break
+    }
+  }
 }

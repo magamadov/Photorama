@@ -14,6 +14,7 @@ class PhotoInfoViewController: UIViewController {
   @IBOutlet var viewsImageView: UIImageView!
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var viewsCounter: UILabel!
+  @IBOutlet weak var favoriteButton: UIBarButtonItem!
   
   var photo: Photo! {
     didSet {
@@ -33,6 +34,12 @@ class PhotoInfoViewController: UIViewController {
       switch result {
         case .success(let image):
           self.imageView.image = image
+          
+          if self.photo.favorite {
+            self.favoriteButton.image = UIImage(systemName: "star.fill")
+          } else {
+            self.favoriteButton.image = UIImage(systemName: "star")
+          }
         
         case .failure(let error):
           print("Error fetching image for photo: \(error)")
@@ -67,5 +74,23 @@ class PhotoInfoViewController: UIViewController {
       preconditionFailure("Unexpected segue id")
     }
   }
-  
+  @IBAction func addToFavorite(_ sender: UIBarButtonItem) {
+    
+    if photo.favorite {
+      photo.favorite = false
+      favoriteButton.image = UIImage(systemName: "star")
+    } else {
+      photo.favorite = true
+      favoriteButton.image = UIImage(systemName: "star.fill")
+    }
+    
+    do {
+      try store.persistentContainer.viewContext.save()
+    } catch {
+      print("Favorites saving failed: \(error)")
+    }
+    
+    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+    
+  }
 }
