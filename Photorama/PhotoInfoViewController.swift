@@ -54,4 +54,18 @@ class PhotoInfoViewController: UIViewController {
     }
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "showTags" {
+      
+      let navController = segue.destination as! UINavigationController
+      let tagController = navController.topViewController as! TagsViewController
+      
+      tagController.store = store
+      tagController.photo = photo
+      
+    } else {
+      preconditionFailure("Unexpected segue id")
+    }
+  }
+  
 }

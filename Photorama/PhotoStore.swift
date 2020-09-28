@@ -83,51 +83,52 @@ class PhotoStore {
   
   private func proccessImageRequest(data: Data?, error: Error?) -> Result<UIImage, Error> {
     guard let imageData = data,
-      let image = UIImage(data: imageData) else {
-        if data == nil {
-          return .failure(error!)
-        } else {
-          return .failure(PhotoError.imageCreationError)
-        }
+          let image = UIImage(data: imageData) else {
+      if data == nil {
+        return .failure(error!)
+      } else {
+        return .failure(PhotoError.imageCreationError)
+      }
     }
     return .success(image)
   }
   
   private func processPhotosRequest(data: Data?, error: Error?) -> Result<[Photo], Error> {
+    
     guard let jsonData = data else {
       return .failure(error!)
     }
     
     let context = persistentContainer.viewContext
+    
     switch FlickrAPI.photos(fromJSON: jsonData) {
-      case let .success(flickrPhotos):
-        let photos = flickrPhotos.map { flickrPhoto -> Photo in
-          let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
-          let predicate = NSPredicate(format: "\(#keyPath(Photo.photoID)) == \(flickrPhoto.photoID)")
-          fetchRequest.predicate = predicate
-          var fetchedPhotos: [Photo]?
-          context.performAndWait {
-            fetchedPhotos = try? fetchRequest.execute()
-          }
-          if let existingPhoto = fetchedPhotos?.first {
-            return existingPhoto
-          }
-          
-          var photo: Photo!
-          
-          context.performAndWait {
-            photo = Photo(context: context)
-            photo.title = flickrPhoto.title
-            photo.photoID = flickrPhoto.photoID
-            photo.remoteURL = flickrPhoto.remoteURL
-            photo.dateTaken = flickrPhoto.dateTaken
-            //photo.viewsCounter = Int64(flickrPhoto.viewsCounter)
-          }
-          return photo
+    case let .success(flickrPhotos):
+      let photos = flickrPhotos.map { flickrPhoto -> Photo in
+        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
+        let predicate = NSPredicate(format: "\(#keyPath(Photo.photoID)) == \(flickrPhoto.photoID)")
+        fetchRequest.predicate = predicate
+        var fetchedPhotos: [Photo]?
+        context.performAndWait {
+          fetchedPhotos = try? fetchRequest.execute()
         }
-        return .success(photos)
-      case let .failure(error):
-        return .failure(error)
+        if let existingPhoto = fetchedPhotos?.first {
+          return existingPhoto
+        }
+        
+        var photo: Photo!
+        
+        context.performAndWait {
+          photo = Photo(context: context)
+          photo.title = flickrPhoto.title
+          photo.photoID = flickrPhoto.photoID
+          photo.remoteURL = flickrPhoto.remoteURL
+          photo.dateTaken = flickrPhoto.dateTaken
+        }
+        return photo
+      }
+      return .success(photos)
+    case let .failure(error):
+      return .failure(error)
     }
   }
   
@@ -141,6 +142,22 @@ class PhotoStore {
       do {
         let allPhotos = try viewContext.fetch(fetchRequest)
         completion(.success(allPhotos))
+      } catch {
+        completion(.failure(error))
+      }
+    }
+  }
+  
+  func fetchAllTags(completion: @escaping (Result<[Tag], Error>) -> Void) {
+    let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+    let sortByName = NSSortDescriptor(key: #keyPath(Tag.name), ascending: true)
+    fetchRequest.sortDescriptors = [sortByName]
+    
+    let viewContext = persistentContainer.viewContext
+    viewContext.perform {
+      do {
+        let allTags = try fetchRequest.execute()
+        completion(.success(allTags))
       } catch {
         completion(.failure(error))
       }
