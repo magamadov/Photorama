@@ -13,8 +13,37 @@ class PhotoCollectionViewCell: UICollectionViewCell {
   @IBOutlet var viewCounterLabel: UILabel!
   @IBOutlet weak var isFavorite: UIImageView!
   
+  var photoDescription: String?
+  
+  override var accessibilityLabel: String? {
+    get {
+      return photoDescription
+    }
+    set {
+      
+    }
+  }
+  
+  override var isAccessibilityElement: Bool {
+    get {
+      return true
+    }
+    set {
+      
+    }
+  }
+  
+  override var accessibilityTraits: UIAccessibilityTraits {
+    get {
+      return super.accessibilityTraits.union([.image, .button])
+    }
+    set {
+      
+    }
+  }
+  
   func update(displaying image: UIImage?, viewCounter: Int, favorite: Bool) {
-  //func update(displaying image: UIImage?, viewCounter: Int) {
+    
     if let imageToDisplay = image {
       spinner.stopAnimating()
       imageView.image = imageToDisplay

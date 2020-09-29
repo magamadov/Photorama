@@ -27,6 +27,8 @@ class PhotoInfoViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    imageView.accessibilityLabel = photo.title
+    
     imageView.addObserver(self, forKeyPath: "image", options: .new, context: .none)
     viewsImageView.image = UIImage(systemName: "eye")
     

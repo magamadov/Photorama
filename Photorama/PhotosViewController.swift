@@ -15,6 +15,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     collectionView.dataSource = photoDataSource
     collectionView.delegate = self
     
