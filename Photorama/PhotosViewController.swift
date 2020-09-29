@@ -56,39 +56,32 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     switch segue.identifier {
-      case "showPhoto":
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
-          let photo = photoDataSource.photos[selectedIndexPath.row]
-          let destinationVC = segue.destination as! PhotoInfoViewController
-          destinationVC.photo = photo
-          destinationVC.store = store
-          destinationVC.photosViewController = self
-        }
-      default:
-        preconditionFailure("Unexpected segue identifier!")
+    case "showPhoto":
+      if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+        let photo = photoDataSource.photos[selectedIndexPath.row]
+        let destinationVC = segue.destination as! PhotoInfoViewController
+        destinationVC.photo = photo
+        destinationVC.store = store
+        destinationVC.photosViewController = self
+      }
+    default:
+      preconditionFailure("Unexpected segue identifier!")
     }
   }
   
   @objc func updateDataSource() {
     store.fetchAllPhotos { (photosResult) in
       switch photosResult {
-        case let .success(photos):
-          
-          var photos = photos
-          
-          if self.photoDataSource.type == .favs {
-            photos = photos.filter { $0.favorite }
-          }
-          
-          self.photoDataSource.photos = photos
-          
-        case .failure:
-          self.photoDataSource.photos.removeAll()
+      case let .success(photos):
+        
+        self.photoDataSource.photos = self.photoDataSource.type == .favs ? photos.filter { $0.favorite } : photos
+        
+      case .failure:
+        self.photoDataSource.photos.removeAll()
       }
       self.collectionView.reloadSections(IndexSet(integer: 0))
     }
   }
-  
   
   @IBAction func viewDidChange(_ sender: UISegmentedControl) {
     
